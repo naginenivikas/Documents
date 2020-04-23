@@ -1,0 +1,338 @@
+								﻿BLUEZ INSTALLATION
+
+
+
+
+	To Install Bluez on linux Operating System we need to aware of the following dependices for the bluez and how to install it and where 		to download those softwares. These Documentation Will helps you to Install Bluez on Linux Operating System.
+
+	
+	
+	
+
+	Before Installing Bluez we need to check the following Softwares in Current Machine whether they are installed in it :-
+	
+		(1) GCC compiler.
+		(2) Glibc.
+    		(3) Dbus.
+    		(4) Readline.
+
+
+	GCC compiler Installation :-
+				
+				To check if GCC compiler (Terminal) is present in your current Linux Operating System follow these procudure.
+
+	    • man gcc (if the gcc is avaliable it will open man pages related to it)
+	      
+	    • If not you have to be a super user (sudo su) for installing the gcc and press the command 
+	
+				apt-get install gcc -y
+
+
+	Softwares :-
+			First download the softwares that are required by Bluez. Currently I am  giving idea for Bluez-5.53 and dependices for 			it are Glib-2.64.0, readline-8.0, dbus-1.12.16.
+
+		You can get the Softwares from these following Links:
+
+		Bluez 		:-  http://www.bluez.org/download/
+	
+		Glib 		:-  https://fossies.org/linux/misc/glib-2.64.0.tar.xz/glib-2.64.0/INSTALL.in
+
+		Readline	:-  https://fossies.org/linux/misc/readline-8.0.tar.gz/
+
+		dbus		:-  https://fossies.org/linux/misc/dbus-1.12.16.tar.gz/
+
+
+
+
+
+
+	Installation :-
+	
+				First extract the tar files in current working directory by terminal (tar -xvf filename) or by GUI Interface.
+
+		After Extraction of softwares then Installation of softwares has to done.
+
+		Example :-
+		
+				tar -xvf readline-8.0.tar.gz
+
+
+	Glib :-
+		
+	    • The GLib package contains low-level libraries useful for providing data structure handling for C, portability wrappers and 		      interfaces for such runtime functionality as an event loop, threads, dynamic loading and an object system. 
+
+	    • First install the meson for compling these glib. To download meson your have to install python-3 .
+
+				sudo apt-get install pip3	(Python-3)
+		
+				pip3 install meson		( meson )
+
+		    you have to under the glib-2.64.0(current_version) then you have to compile the glib by
+
+
+    	    		• meson _build				# configure the build.
+      
+	    		• sudo ninja -C _build			# build Glib 
+      
+	    		• sudo ninja -C _build install 		# install Glib
+
+
+		Note :-
+			If there is an error in configuring the glib that is due to path.You have to add the path of meson to enviromental 				variables.
+
+
+		
+	ReadLine :-
+			The Readline library provides a set of functions for use by applications that allow users to edit command lines as 		      they are typed in.
+
+	         You have to be under readline directory :
+
+		    	1. cd readline-8.0 (current version)
+
+		    	2. sudo ./configure --prefix=/usr/local/bluez/readline-8.0  
+       						(Note :- create bluez directory /usr/local/ )
+		    	3. sudo make
+
+		    	4. sudo make install
+
+	
+	Dbus :-
+			D-Bus is a simple system for interprocess communication and coordination. The “coordination" part is important that 			D-Bus provides a bus daemon that does things like :
+	  
+	 		- notify applications when other apps exit.
+			- start services on demand.
+			- support single-instance applications.
+
+
+    			1. sudo ./configure –prefix=/usr/local/bluez/dbus-1.12.16
+	    			
+			2. sudo make check
+
+		  	3. sudo make install
+
+	
+	Bluez :-
+			Bluez is an bluetooth stack in Linux Operating System where we can develope bluetooth profiles and we can test 			bluetooth profiles too.
+
+    			1. sudo ./configure –prefix=/usr/local/bluez/bluez-5.53
+       
+    			2. sudo make check
+       
+    			3. sudo make install
+
+
+			To check wheteher is working properly or not u have to run dbus and bluetoothd. First check whether is there any 			 bluetooth and dbus process is running in our system by the following command in terminal :
+
+		
+					ps -elf | grep dbus-daemon  (Which having message --system --nopidfile) 
+		
+								&
+	
+					ps -elf | grep bluetoothd    
+ 				(which having message /usr/local/bluez/bluez-5.53/libexec/bluetooth/bluetoothd)	
+
+
+			If there is an process running you have to kill that process by command.
+
+					sudo kill -9 process_id
+
+
+			We have to run the bluez by running along with dbus
+
+		
+					/usr/local/bluez/dbus-1.12.16/bin/dbus-daemon --system  --nopidfile
+
+					/usr/local/bluez/bluez-5.53/libexec/bluetooth/bluetoothd -ndE --compat
+
+			And Run Bluetoothctl of bluez
+
+					/usr/local/bluez/bluez-5.53/bin/bluetoothctl
+
+
+
+
+	
+	Pulse Audio :-
+				PulseAudio is a sound system for POSIX Operating System, meaning that it is a proxy for sound applications. It 			allows you to do advanced operations on your sound data as it passes between your application and your hardware. Things like 			transferring the audio to a different machine, changing the sample format or channel count and mixing several sounds into one 			easily are achieved using a sound server.
+
+		
+		Dependices for PulseAudio are :-
+			
+			 
+				libsndfile 	:- 	http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.28.tar.gz
+
+				FLAC 		:-	https://downloads.xiph.org/releases/flac/flac-1.3.3.tar.xz
+
+				libogg 		:-  	https://downloads.xiph.org/releases/ogg/libogg-1.3.4.tar.xz
+
+				libvorbis 	:- 	https://downloads.xiph.org/releases/vorbis/libvorbis-1.3.6.tar.xz
+
+				pulseaudio 	:-  	https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-13.0.tar.xz
+
+
+		Installation :-
+
+				Flac:-
+
+						FLAC is an audio CODEC similar to MP3, but lossless, meaning that audio is compressed without 						losing any information
+
+					
+					./configure --prefix=/usr
+	
+					 make
+		
+					 sudo make install 
+
+	
+
+				Libogg :-
+
+						The libogg package contains the Ogg file structure. Which is useful for creating (encoding) or 						playing (decoding) a single physical bit stream.
+
+
+					./configure --prefix=/usr
+		
+					make
+
+					sudo make install	
+
+
+				Libvorbis :- 
+  
+						The libvorbis package contains a general purpose audio and music encoding format. This is 						useful for creating (encoding) and playing (decoding) sound in an open (patent free) format.
+
+		
+					./configure --prefix=/usr
+
+					make
+ 
+					sudo make install
+
+
+				Libsndfile :-	
+	
+						Libsndfile is a library of C routines for reading and writing files containing sampled audio 						data. 
+
+				
+					./configure --prefix=/usr
+	
+					make
+
+					sudo make install
+
+
+
+				PulseAudio:-		
+					
+					
+						./configure --prefix=/usr/local/bluez/pulseaudio-13.0
+
+
+						
+	
+						Note :-
+
+								for ogg issues when libvorbis configure.
+
+								sudo apt-get install libvorbis-dev
+													
+								-----------------------------------------------------------------
+
+								for pulseaudio m4 missing
+
+								sudo apt-get install m4
+
+								-----------------------------------------------------------------
+
+								configure: error: Unable to find libltdl version 2. Makes sure you have 								libtool 2.4 or later installed.
+
+
+								sudo apt-get install libltdl-dev
+
+
+								-----------------------------------------------------------------
+
+								configure: error: *** sys/capability.h not found.
+
+								
+								sudo apt-get install libcap-dev
+
+
+
+								-----------------------------------------------------------------
+
+
+								configure: error: Package requirements ( sndfile >= 1.0.20 ) were not met:
+
+								No package 'sndfile' found
+
+								Consider adjusting the PKG_CONFIG_PATH environment variable if you
+								installed software in a non-standard prefix.
+
+								export PKG_CONFIG_PATH=/usr/local/bluez/pulseaudio/libsndfile-1.0.28/lib/
+								pkgconfig
+
+
+													or 
+
+
+								sudo apt-get install libsndfile-dev
+
+
+
+
+		Running PulseAudio :-
+
+						
+					Check Whether any pulseaudio process is running in background.If it is running then kill that process 					as show in below :-
+
+
+						ps -elf | grep pulseaudio
+
+
+						sudo kill-9 PulseAudio_pid (If the process is not getting killed then change the name of that 							process i.e, sudo mv /usr/bin/pulseaudio /usr/bin/pulseaudio_1)
+
+
+
+						/usr/local/bluez/pulseaudio-13.0/bin/pulseaudio -vvv
+
+
+
+
+		OFONO :-
+
+				oFono is a free software project for mobile telephony (GSM/UMTS) applications. It is built on 3GPP standards 				and uses a high-level D-Bus API for use by telephony applications.
+
+
+				Installing ofono :-
+
+							Extract the ofono.tar file.
+
+							./congigure --prefix=/usr/local/bluez/ofono-1.30
+
+							
+							make check
+
+
+							sudo make install
+	
+
+				Running ofono :-
+
+							. Need to be in super user mode
+
+							. Start dbus-daemon, bluetoothd and pulseaudio after that we have to run ofono	
+
+
+							. Check If ofono process is running in background
+
+							. ps -elf | grep ofono (If running then change the name of executable sudo mv /usr/    								   sbin/ofono /usr/sbin/ofono_1)
+
+							. Then kill the process of ofono
+
+
+  							. And run the command
+
+							
+							/usr/local/bluez/ofono-1.30/sbin/ofonod -nd
+
